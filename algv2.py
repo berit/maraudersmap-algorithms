@@ -1,3 +1,6 @@
+import numpy
+from operator import itemgetter
+
 # Dot product between two signal vectors (union of routers)
 def nearest_binds(signals, limit = 10, **crit):
 	signalsA = {k.lower(): v for k, v in signals.items()}
@@ -20,3 +23,12 @@ def nearest_binds(signals, limit = 10, **crit):
                 matches.append((dist, bind))
 
 	return [__format_bind(x[1]) for x in sorted(matches, key=itemgetter(0), reverse=True)[0:limit]]
+
+def __format_bind(bind):
+	return {"id": str(bind['_id']),
+		"username": bind['username'],
+		"place": str(bind['place']),
+		"x": bind['x'],
+		"y": bind['y'],
+		"signals": bind['signals']
+		}
