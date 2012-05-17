@@ -72,7 +72,6 @@ def get_avg_signals_dict(samples=3, tsleep=0.15):
     """
     signals_dict = dict()
     d = get_avg_signal_nodes_dict(samples=samples, tsleep=tsleep).itervalues()
-    print d
 
     for node in d:
         signals_dict[node.MAC_address] = node.signal_strength
@@ -154,12 +153,13 @@ def __interpret_DB(signal_string):
     return 100 + int(signal_string)
 
 def __getExePath():
-    return 'windowsGetWirelessStrength\\Get Wireless Strengths\\bin\\Release\\'
+    return '.\\windowsGetWirelessStrength\\Get Wireless Strengths\\bin\\Release\\'
 
 def __get_signal_nodes_win():
     signal_nodes_dict = dict()
     # Should work on Windows > XP SP3
-    o = subprocess.Popen(os.path.join(__getExePath(), 'Get Wireless Strengths.exe'), stderr=subprocess.PIPE, stdout=subprocess.PIPE,shell=True).stdout#shell=true hides shell
+    path =  os.path.join(__getExePath(), 'Get Wireless Strengths.exe')
+    o = subprocess.Popen(path, stderr=subprocess.PIPE, stdout=subprocess.PIPE,shell=False).stdout#shell=true hides shell
     res = o.read()
     o.close()
     data = json.loads(res)
